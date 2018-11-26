@@ -1,0 +1,17 @@
+app:
+  name: graphdb-demo
+
+timezone:
+  default: Asia/Tokyo
+locale:
+  default: ja
+
+server:
+  port: 5000
+
+spring:
+  datasource:
+    endpoint: localhost
+    port: 8182
+  profiles:
+    active: dev

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="/js/lib/bootstrap.min.js" type="text/javascript"></script>
+    <title th:text="${#messages.msg('page.graph.index.title')}"></title>
+  </head>
+  <body>
+    <div class="container">
+      <h3 th:text="${#messages.msg('page.graph.index.title')}"></h3>
+      <h4 th:text="${#messages.msg('page.user.list.label')}"></h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th th:text="${#messages.msg('model.user.name')}"></th>
+            <th th:text="${#messages.msg('model.user.purchased')}"></th>
+            <th th:text="${#messages.msg('model.user.recommended')}"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td>
+              <ul th:each="title: ${user.purchased}">
+                <li th:text="${title}"></li>
+              </ul>
+            </td>
+            <td>
+              <ul th:each="title: ${user.recommends}">
+                <li th:text="${title}"></li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <h4 th:text="${#messages.msg('page.book.list.label')}"></h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th th:text="${#messages.msg('model.book.author')}"></th>
+            <th th:text="${#messages.msg('model.book.title')}"></th>
+            <th th:text="${#messages.msg('model.book.keywords')}"></th>
+            <th th:text="${#messages.msg('page.book.purchase.label')}"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="book : ${books}">
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.keywords}"></td>
+            <td><form role="form" action="/purchase" th:action="@{/purchase}" method="post">
+              <label class="control-label" for="inputUserName" th:value="${#messages.msg('model.user.name')}"></label>
+              <input type="text" class="form-control" id="inputUserName" name="userName" />
+              <input type="hidden" name="bookTitle" th:value="${book.title}"/>
+              <button type="submit" class="btn btn-default" th:text="${#messages.msg('page.purchase.button.label')}"></button>
+            </form></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <h4 th:text="${#messages.msg('page.book.add.label')}"></h4>
+      <form role="form" action="/book" th:action="@{/book}" method="post">
+          <!-- title -->
+          <div class="form-group">
+            <label class="control-label" for="inputTitle" th:text="${#messages.msg('model.book.title')}"></label>
+            <input type="text" class="form-control" id="inputTitle" name="title" />
+          </div>
+          <!-- author -->
+          <div class="form-group">
+            <label class="control-label" for="inputAuthor" th:text="${#messages.msg('model.book.author')}"></label>
+            <input type="text" class="form-control" id="inputAuthor" name="author" />
+          </div>
+          <!-- keywords -->
+          <div class="form-group">
+            <label class="control-label" for="inputKeywords" th:text="${#messages.msg('model.book.keywords')}"></label>
+            <input type="text" class="form-control" id="inputKeywords" name="keywords" />
+          </div>
+          <button type="submit" class="btn btn-default" th:text="${#messages.msg('page.book.button.label')}"></button>
+      </form>
+    </div>
+  </body>
+</html>
